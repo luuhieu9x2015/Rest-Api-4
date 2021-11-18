@@ -24,11 +24,10 @@ class EventViewSet(generics.ListAPIView):
     
 
     def get(self, request, *args, **kwargs):
-        type = request.GET.get('type') or ''
+        type = request.GET.get('type', '')
         keyword = request.GET.get('keyword') or ''
         
-        events = EventModel.objects.prefetch_related('event_image').filter(type__contains=type, title__icontains=keyword)
-        # events = EventModel.objects.prefetch_related('event_image').all()
+        events = EventModel.objects.prefetch_related('event_image', 'eauu').filter(type__contains=type, title__icontains=keyword)
         serializer = EventSerializer(events, many=True)
         result = self.paginate_queryset(serializer.data)
         return self.get_paginated_response(result)

@@ -29,9 +29,17 @@ class ImgUrlSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     event_image = ImgUrlSerializer(many=True, read_only=True)
+    is_looked = serializers.SerializerMethodField()
+
     class Meta:
         model = EventModel
-        fields = ['event_id', 'type', 'title', 'event_image']
+        fields = ['event_id', 'type', 'title', 'event_image', 'is_looked']
         extra_kwargs = {
             'event_id': {'required': False}
         }
+
+    def get_is_looked(self, obj):
+        is_looked = 0
+        if obj.is_private and len(obj.eauu.all()) == 0:
+            is_looked = 1
+        return is_looked

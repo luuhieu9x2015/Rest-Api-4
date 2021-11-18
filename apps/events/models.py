@@ -30,8 +30,8 @@ class EventModel(BaseModel):
         db_table = 'events'
 
 class EventAuthorizedUserModel(BaseModel):
-    event = models.ForeignKey(EventModel, on_delete=models.CASCADE)
-    user_id = models.IntegerField(primary_key=True)
+    event = models.ForeignKey(EventModel, on_delete=models.CASCADE, related_name='eauu')
+    user_id = models.ForeignKey(to='users.UsersModel', on_delete=models.CASCADE, related_name='eauu')
     class Meta:
         db_table = 'event_authorized_users'
 
