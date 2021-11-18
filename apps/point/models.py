@@ -7,6 +7,7 @@ from apps.users.models import ClientModel, UsersModel
 
 from commons.models import BaseModel
 
+
 class PointsPackagesModel(BaseModel):
     points_package_id = models.IntegerField(max_length=11, primary_key=True)
     client_id = models.ForeignKey(ClientModel, max_length=11)
@@ -17,6 +18,10 @@ class PointsPackagesModel(BaseModel):
     points = models.DecimalField()
     display_order = models.BooleanField(max_length=2)
 
+    class Meta:
+        db_table = 'points_packages'
+
+
 class UserPointsModel(BaseModel):
     user_point_id = models.IntegerField(max_length=11, primary_key=True)
     user_id = models.ForeignKey(UsersModel, max_length=11)
@@ -26,6 +31,10 @@ class UserPointsModel(BaseModel):
     points = models.DecimalField()
     transacted_at = models.DateTimeField()
     points_balance = models.DecimalField()
+
+    class Meta:
+        db_table = 'user_points'
+
 
 class PointsPackagePurchaseHistoriesModel(BaseModel):
     id = models.IntegerField(max_length=11, primary_key=True)
@@ -38,11 +47,19 @@ class PointsPackagePurchaseHistoriesModel(BaseModel):
     apple_receipt = models.TextField(null=True)
     google_receipt = models.TextField(null=True)
 
+    class Meta:
+        db_table = 'point_package_purchase_histories'
+
+
 class PointSpendingHistoriesModel(BaseModel):
     id = models.IntegerField(max_length=11, primary_key=True)
     user_point_id = models.ForeignKey(UserPointsModel, max_length=11)
-    user_gift_id = models.ForeignKey(UserGiftsModel, max_length=11)
+    # ? user_gift_id = models.ForeignKey(UserGiftsModel, max_length=11)
     spent_at = models.DateTimeField()
+
+    class Meta:
+        db_table = 'point_spending_histories'
+
 
 class GiftsModel(BaseModel):
     gift_id = models.IntegerField(max_length=11, primary_key=True)
@@ -52,12 +69,20 @@ class GiftsModel(BaseModel):
     image_url = models.CharField(max_length=255)
     display_order = models.BooleanField(max_length=2)
 
+    class Meta:
+        db_table = 'gifts'
+
+
 class UserGiftsModel(BaseModel):
     user_gift_id = models.IntegerField(max_length=11, primary_key=True)
     user_id = models.ForeignKey(UsersModel, max_length=11)
     gift_id = models.ForeignKey(GiftsModel, max_length=11)
     status = models.BooleanField(max_length=2)
     used_at = models.DateTimeField(null=True)
+
+    class Meta:
+        db_table = 'user_gift'
+
 
 class GiftPurchaseHistories(BaseModel):
     id = models.IntegerField(max_length=11, primary_key=True)
@@ -66,6 +91,10 @@ class GiftPurchaseHistories(BaseModel):
     points_spent = models.DecimalField()
     purchased_at = models.DateTimeField()
 
+    class Meta:
+        db_table = 'gift_purchase_histories'
+
+
 class GiftTippingHistories(BaseModel):
     id = models.IntegerField(max_length=11, primary_key=True)
     user_gift_id = models.ForeignKey(UserGiftsModel, max_length=11)
@@ -73,9 +102,17 @@ class GiftTippingHistories(BaseModel):
     points_equivalent = models.DecimalField()
     tipped_at = models.DateTimeField()
 
+    class Meta:
+        db_table = 'gift_tipping_histories'
+
+
 class Follows(BaseModel):
     from_user_id = models.IntegerField(max_length=11, primary_key=True)
     to_user_id = models.IntegerField(max_length=11)
+
+    class Meta:
+        db_table = 'follows'
+
 
 class StampCodesModel(BaseModel):
     stamp_code_id = models.IntegerField(max_length=11, primary_key=True)
@@ -87,6 +124,10 @@ class StampCodesModel(BaseModel):
     number_of_applied_users = models.IntegerField(max_length=11)
     expires_in = models.DateTimeField()
 
+    class Meta:
+        db_table = 'stamp_code'
+
+
 class UserStampsModel(BaseModel):
     user_stamp_id = models.IntegerField(max_length=11, primary_key=True)
     user_id = models.ForeignKey(UsersModel, max_length=11)
@@ -97,6 +138,10 @@ class UserStampsModel(BaseModel):
     transacted_at = models.DateTimeField()
     stamps_balance = models.DecimalField()
 
+    class Meta:
+        db_table = 'user_stamps'
+
+
 class StampReceiptHistoriesModel(BaseModel):
     id = models.IntegerField(max_length=11, primary_key=True)
     user_stamp_id = models.ForeignKey(UserStampsModel, max_length=11)
@@ -104,11 +149,19 @@ class StampReceiptHistoriesModel(BaseModel):
     stamp_code_id = models.IntegerField(max_length=11, null=True)
     received_at = models.DateTimeField()
 
+    class Meta:
+        db_table = 'stamp_receipt_histories'
+
+
 class StampSpendingHistoriesModel(BaseModel):
     id = models.IntegerField(max_length=11, primary_key=True)
     user_stamp_id = models.ForeignKey(UserStampsModel, max_length=11)
     spent_for = models.BooleanField(max_length=2)
     spent_at = models.DateTimeField()
+
+    class Meta:
+        db_table = 'stamp_spending_histories'
+
 
 class RankingsModel(BaseModel):
     ranking_id = models.IntegerField(max_length=11, primary_key=True)
@@ -118,3 +171,5 @@ class RankingsModel(BaseModel):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    class Meta:
+        db_table = 'rankings'

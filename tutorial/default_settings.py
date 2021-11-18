@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.users',
     'apps.events',
-    'commons'
+    'apps.masterdata',
+    'commons',
 ]
 
 MIDDLEWARE = [

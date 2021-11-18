@@ -29,9 +29,15 @@ class LiveStreamModel(BaseModel):
     vide_url_sd = models.CharField(max_length=255, null=True)
     vide_url_fhd = models.CharField(max_length=255, null=True)
 
+    class Meta:
+        db_table = 'live_stream'
+
 class LiveStreamViewerModel(BaseModel):
     live_stream_id = models.ForeignKey(LiveStreamModel, max_length=11, null=False)
     user_id = models.IntegerField(max_length=11, null=False, primary_key=True)
     viewed_at = models.DateTimeField(null=False)
+
+    class Meta:
+        db_table = 'live_stream_viewer'
     
 

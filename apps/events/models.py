@@ -6,7 +6,7 @@ from commons.models import BaseModel
 class EventModel(BaseModel):
     choice_type = (
         (1, 'Live stream event'),
-        (2, 'Offline event)')
+        (2, 'Offline event')
     )
 
     choice_is_private = (
@@ -26,6 +26,9 @@ class EventModel(BaseModel):
     is_private = models.SmallIntegerField(choices=choice_type)
     private_key = models.CharField(max_length=255, null=True)
     is_archived = models.SmallIntegerField(choices=choice_is_archived)
+
+    def __str__(self):
+        return self.title
     class Meta:
         db_table = 'events'
 
@@ -48,6 +51,9 @@ class PerformancesModel(BaseModel):
     end_datetime = models.DateTimeField()
     capacity = models.IntegerField(null=True)
     ticket_available_flag = models.SmallIntegerField(choices=choice_ticket_available_flag)
+
+    def __str__(self):
+        return self.name
     class Meta:
         db_table = 'performances'
     

@@ -5,8 +5,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tutorial',
         'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
         'PORT': '3306'
     }
 }
